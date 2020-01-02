@@ -10,6 +10,7 @@
 
     </a-menu>
     <user-menu id="user_menu"></user-menu>
+
     <router-view></router-view>
 
   </div>
@@ -49,7 +50,7 @@ export default {
   .home{
     position: relative;
     height: 950px;
-    background: rgba(245,245 ,245,0.8);
+    background: rgba(240,242 ,243,0.8);
   }
   #user_menu{
     position:absolute;

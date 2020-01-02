@@ -3,7 +3,7 @@
     <a-popover  trigger="hover">
       <template slot="content" >
         <a-icon type="setting" />
-        <router-link to="/account/settring" style="color: black">账号设置</router-link>
+        <router-link to="/account/setting" style="color: black">账号设置</router-link>
         <a-divider type="horizontal" />
         <p>
           <a-icon type="reload" />

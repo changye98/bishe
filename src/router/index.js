@@ -47,14 +47,28 @@ const routes = [
     {
         path: '/account',
         name: 'account',
-        redirect: '/account/setting',
-        component: () => import('../views/user/setting.vue'),
+        //redirect: '/account/setting',
+        component: () => import('../views/Home.vue'),
         children: [
             {
                 path: '/account/setting',
                 name: 'setting',
+                redirect: '/account/setting/base_setting',
                 component: () => import('../views/user/setting.vue'),
+                children:[
+                    {
+                        path: '/account/setting/base_setting',
+                        name: 'base_setting',
+                        component: () => import('../views/user/baseSetting.vue'),
+                    },
+                    {
+                        path: '/account/setting/personalize',
+                        name: 'personalize',
+                        component: () => import('../views/user/personalize.vue'),
+                    }
+                ]
             }
+
         ]
     },
 

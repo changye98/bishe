@@ -1,26 +1,64 @@
 <template>
     <div class="home"  >
-        <a-menu  mode="horizontal" class="clearfix menu" >
-            <a-menu-item class="left" style="padding: 0px"><img src="~assets/img/logo.png" width="500px"> </a-menu-item>
-            <a-menu-item class="daohanglan" style="padding: 0px"><router-link to="/home/index"><a-icon type="home" />首页</router-link> </a-menu-item>
-            <a-menu-item class="daohanglan" style="padding: 0px"> <router-link to="/home/myGrade"><a-icon type="user" />我的成绩</router-link></a-menu-item>
-            <a-menu-item class="daohanglan" style="padding: 0px"> <router-link to="/home/question"><a-icon type="question-circle" />题目管理</router-link></a-menu-item>
-            <a-menu-item class="daohanglan" style="padding: 0px"><router-link to="/home/test_paper"><a-icon type="edit" />试卷管理</router-link> </a-menu-item>
-            <a-menu-item class="daohanglan" style="padding: 0px"><router-link to="/home/exam"><a-icon type="highlight" />考试列表</router-link> </a-menu-item>
+        <a-menu
+                style="width: 256px;height: 100%;border: 1px solid black"
+                mode="inline"
+                :theme="theme"
+                @click="handleClick"
+        >
+            <a-menu-item key="1"  class="menu_item" >
+                <router-link to="/account/setting/base_setting">
+                    <a-icon type="mail" />
+                    基本设置
+                </router-link>
+            </a-menu-item>
+            <a-menu-item key="2"  class="menu_item" >
+
+                    <router-link to="/account/setting/personalize">
+                        <a-icon type="calendar" />
+                        个性化
+                    </router-link>
+            </a-menu-item>
+            <router-view style="float: right"></router-view>
 
         </a-menu>
-        <user-menu id="user_menu"></user-menu>
-        <router-view></router-view>
+        <h3>ssss</h3>
 
     </div>
 </template>
 
 <script>
     export default {
-        name: "baseSettring"
+        name: "baseSettring",
+        data(){
+            return{
+                theme: 'light',
+            }
+        },
+        methods: {
+            handleClick (e) {
+                console.log('click ', e)
+                this.current = e.key
+            },
+            changeTheme (checked) {
+                this.theme = checked ? 'dark' : 'light'
+            },
+        },
     }
 </script>
 
 <style scoped>
-
+    .home{
+        width: 1300px;
+        height: 500px;
+        margin: 50px auto;
+        text-align: center;
+        border: 2px solid red;
+    }
+     .ant-card-wider-padding>>>.ant-card-body{
+        height: 100%;
+    }
+    .menu_item{
+        text-align: left;
+    }
 </style>
