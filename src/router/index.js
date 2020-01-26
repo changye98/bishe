@@ -45,6 +45,10 @@ const routes = [
         ]
     },
     {
+    path: '/exam/:id',
+    component: () => import(/* webpackChunkName: "fail" */ '../views/list/examModules/ExamDetail')
+     },
+    {
         path: '/account',
         name: 'account',
         //redirect: '/account/setting',

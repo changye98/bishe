@@ -31,7 +31,7 @@
                 message: ' 长度应不小于6位',
               },
             ],
-            validateTrigger: 'change'
+            validateTrigger: 'blur'
           },
         ]"
               >
@@ -51,7 +51,7 @@
                 {
                 validator: this.handleUsernameOrPassword,
                 message: ' 长度应不小于6位',
-              },], validateTrigger: 'change'}
+              },], validateTrigger: 'blur'}
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -79,16 +79,20 @@
         },
         data () {
             return {
-                model:{},
-                customActiveKey: 'tab1',
-                form: this.$form.createForm(this),
+              visible:false,
+              model:{},
+              customActiveKey: 'tab1',
+              form: this.$form.createForm(this),
+              url:{
+                  login:'/login/dengLuXianZhi'
+                },
             }
         },
         created () {
         },
         methods: {
             handleUsernameOrPassword (rule, value, callback) {
-                const { state } = this
+                //const { state } = this
                 const regex = /[a-zA-Z0-9]{6,}/
                 if (regex.test(value)) {
                     callback()
@@ -102,15 +106,31 @@
                         let formData = Object.assign(this.model, values);
                         formData['username']=this.form.getFieldValue('username');
                         formData['password']=this.form.getFieldValue('password') ;
-                        getAction("/test/admin/listTest",{fx:6666}).then((res)=>{
+                        getAction(this.url.login,formData).then((res)=>{
                             console.log(res)
-                            this.$router.push('/about');
+                          if(res.data.success===true){
+                            localStorage.setItem("userId",res.data.result.userId);
+                            localStorage.setItem("userNickname",res.data.result.userNickname);
+                            localStorage.setItem("userRoleId",res.data.result.userRoleId);
+                            localStorage.setItem("userAvatar",res.data.result.userAvatar);
+
+                            this.$router.push("/home/index")
+                          }else{
+                            this.$notification['error']({
+                              message: '登陆失败',
+                              description: res.data.message,
+                            });
+
+                          }
                         })
 
                     }
                 })
 
-            }
+            },
+          closeModal(e) {
+            this.visible = false
+          },
         }
     }
 </script>

@@ -12,9 +12,10 @@
       </template>
 
       <a-button style="background: rgba(118,238,0,0.1);border: transparent">
-        <a-avatar   icon="user" style="margin: 0px 10px"/>
+          <a-avatar :src="userAvatar" size="large" style="margin: 0px 10px"/>
+        <!--<a-avatar   icon="user" style="margin: 0px 10px"/>-->
         <span>
-          用户名
+          {{username}}
         </span>
       </a-button>
     </a-popover>
@@ -27,6 +28,12 @@
 
 export default {
   name: 'UserMenu',
+  data(){
+    return {
+       username:"" ,
+      userAvatar:""
+    }
+  },
   methods: {
     ...mapActions(['Logout']), // 清除token和localStorage中的信息
     ...mapGetters(['nickname', 'avatar']), // 从全局变量中获取用户昵称和头像
@@ -50,6 +57,10 @@ export default {
         }
       })
     }
+  },
+  created(){
+    this.username = localStorage.getItem("userNickname")
+    this.userAvatar=localStorage.getItem("userAvatar")
   }
 }
 </script>
