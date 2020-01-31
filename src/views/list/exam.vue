@@ -62,7 +62,6 @@
       },
       methods: {
         joinExam (id) {
-          console.log(id)
           const routeUrl = this.$router.resolve({
             path: `/exam/${id}`
           })
@@ -71,12 +70,13 @@
         queryList(pageNo){
           this.loading=true
           getAction("/exam/list",{currentPage:pageNo}).then(res => {
-            console.log(res)
             if (res.data.success === true) {
               this.dataSource = res.data.result.records
               this.pagination.current =res.data.result.current
               this.pagination.total =res.data.result.total
               this.loading=false
+              document.getElementsByClassName("ant-list-pagination")[0].style.display="block"
+
             } else {
               this.$notification.error({
                 message: '获取考试列表失败',
@@ -101,5 +101,7 @@
 </script>
 
 <style scoped>
-
+    .card-list >>> .ant-list-pagination {
+        display:none ;
+    }
 </style>

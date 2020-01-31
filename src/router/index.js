@@ -46,8 +46,12 @@ const routes = [
     },
     {
     path: '/exam/:id',
-    component: () => import(/* webpackChunkName: "fail" */ '../views/list/examModules/ExamDetail')
+    component: () => import('../views/list/examModules/ExamDetail')
      },
+    {
+      path: '/exam/record/:exam_id/:record_id',
+      component: () => import(/* webpackChunkName: "fail" */ '../views/list/examModules/ExamRecordDetail')
+    },
     {
         path: '/account',
         name: 'account',
