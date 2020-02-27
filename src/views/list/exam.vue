@@ -1,6 +1,10 @@
 <template>
     <div class="card-list" ref="content">
-
+        <div >
+        <h2 style="display:inline;margin-left: 50px;position:absolute;margin-top: 50px"  >请点击下列考试卡片来开启考试！祝您考试顺利</h2>
+        <img src="~assets/img/exam.png" style="width: 15%;display: inline" class="right">
+        <div class="clearfix" ></div>
+        </div>
         <a-list
                 :grid="{gutter: 24, lg: 3, md: 2, sm: 1, xs: 1}"
                 :dataSource="dataSource"

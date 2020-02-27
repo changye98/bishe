@@ -6,7 +6,7 @@
     title="参加过的考试">
 
     <div slot="extra">
-    <a-input-search style="margin-left: 16px; width: 272px;"/>
+    <a-input-search style="margin-left: 16px; width: 272px;" @search="onSearch"   placeholder="请输入考试名称"/>
     </div>
     <a-list size="large">
     <a-list-item :key="index" v-for="(item, index) in data">
@@ -44,7 +44,8 @@
         name: "myGrade",
       data () {
         return {
-          data: {}
+          data: {
+          }
         }
       },
       methods: {
@@ -59,7 +60,30 @@
           })
           // 和点击考试卡片效果一样，跳转到考试页面，里面有所有题目的情况，相当于就是详情了
           window.open(routeUrl.href, '_blank')
-        }
+        },
+        onSearch (value) {
+          if(typeof value==="undefined"){
+            return ;
+          }else{
+            getAction("/exam/record/list/"+localStorage.getItem("userId"),{keyWord:value}).then(res => {
+              if (res.data.success === true) {
+                this.data = res.data.result
+              } else {
+                this.$notification.error({
+                  message: '获取考试记录失败',
+                  description: res.data.message
+                })
+              }
+            }).catch(err => {
+
+              // 失败就弹出警告消息
+              this.$notification.error({
+                message: '获取考试记录失败',
+                description: err.message
+              })
+            })
+          }
+        },
       },
       created () {
         // 从后端数据获取考试列表，适配前端卡片

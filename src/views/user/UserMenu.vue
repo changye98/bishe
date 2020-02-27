@@ -2,11 +2,11 @@
   <div>
     <a-popover  trigger="hover">
       <template slot="content" >
-        <a-icon type="setting" />
+        <a-icon type="setting" />&nbsp;
         <router-link to="/account/setting" style="color: black">账号设置</router-link>
         <a-divider type="horizontal" />
-        <p>
-          <a-icon type="reload" />
+        <p @click="handleLogout">
+          <a-icon type="reload" />&nbsp;
           <span>退出登录</span>
         </p>
       </template>
@@ -34,9 +34,9 @@ export default {
       userAvatar:""
     }
   },
+
   methods: {
     ...mapActions(['Logout']), // 清除token和localStorage中的信息
-    ...mapGetters(['nickname', 'avatar']), // 从全局变量中获取用户昵称和头像
     handleLogout () {
       const that = this
 
@@ -44,14 +44,12 @@ export default {
         title: '提示',
         content: '真的要注销登录吗 ?',
         onOk () {
-          return that.Logout({}).then(() => {
-            window.location.reload()
-          }).catch(err => {
-            that.$message.error({
-              title: '错误',
-              description: err.message
-            })
-          })
+            that.$router.push("/login")
+            localStorage.removeItem("userNickname")
+            localStorage.removeItem("userAvatar")
+            localStorage.removeItem("userId")
+             localStorage.removeItem("userRoleId")
+
         },
         onCancel () {
         }

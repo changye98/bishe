@@ -9,48 +9,79 @@ const routes = [
     redirect:'/login'
   },{
     path:'/login',
-    component:Login
+    component:Login,
+    meta:{
+      title:"登录页面"
+    }
+  },
+  {
+    path: '/register',
+    component: () => import('../views/user/Register'),
+    meta:{
+      title:"注册页面"
+    }
   },
     {
         path: '/home',
         name: 'home',
         redirect: '/home/index',
-        component: () => import(/* webpackChunkName: "about" */ '../views/Home.vue'),
+        component: () => import('../views/Home.vue'),
         children: [
             {
                 path: '/home/index',
                 name: 'index',
                 component: () => import('../views/list/index.vue'),
+                meta:{
+                  title:"首页"
+                }
             },
             {
                 path: '/home/exam',
                 name: 'exam',
                 component: () => import('../views/list/exam.vue'),
+                meta:{
+                  title:"考试页面"
+                }
             },
             {
                 path: '/home/myGrade',
                 name: 'myGrade',
                 component: () => import('../views/list/myGrade.vue'),
+                meta:{
+                  title:"试卷查询"
+                }
             },
             {
                 path: '/home/question',
                 name: 'question',
                 component: () => import('../views/list/question.vue'),
+                meta:{
+                  title:"问题管理"
+                }
             },
             {
                 path: '/home/test_paper',
                 name: 'test_paper',
                 component: () => import('../views/list/test_paper.vue'),
+                meta:{
+                  title:"试卷管理"
+                }
             },
         ]
     },
     {
     path: '/exam/:id',
-    component: () => import('../views/list/examModules/ExamDetail')
+    component: () => import('../views/list/examModules/ExamDetail'),
+    meta:{
+        title:"考试详情页面"
+      }
      },
     {
       path: '/exam/record/:exam_id/:record_id',
-      component: () => import(/* webpackChunkName: "fail" */ '../views/list/examModules/ExamRecordDetail')
+      component: () => import(/* webpackChunkName: "fail" */ '../views/list/examModules/ExamRecordDetail'),
+      meta:{
+        title:"考试成绩详情页面"
+      }
     },
     {
         path: '/account',

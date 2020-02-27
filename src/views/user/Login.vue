@@ -18,7 +18,7 @@
               <a-input
                       size="large"
                       type="text"
-                      placeholder="请输入帐户名/邮箱/手机号"
+                      placeholder="请输入帐户名"
                       v-decorator="[ 'username',
            {
             rules: [
@@ -56,13 +56,14 @@
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
+            <router-link class="right" to="/register" style="float: right;">注册账户</router-link>
           </a-form-item>
         </a-tab-pane>
       </a-tabs>
 
 
-      <a-form-item style="margin-top:24px">
-        <a-button type="primary" html-type="submit" @click="handleOk">
+      <a-form-item style="margin-top:-5px">
+        <a-button type="primary" html-type="submit" @click="handleOk" >
           登录
         </a-button>
 
@@ -75,7 +76,6 @@
     import  {getAction} from "@/http";
     export default {
         components: {
-
         },
         data () {
             return {
@@ -89,6 +89,7 @@
             }
         },
         created () {
+          console.log(this.username = localStorage.getItem("userNickname"))
         },
         methods: {
             handleUsernameOrPassword (rule, value, callback) {
@@ -107,7 +108,6 @@
                         formData['username']=this.form.getFieldValue('username');
                         formData['password']=this.form.getFieldValue('password') ;
                         getAction(this.url.login,formData).then((res)=>{
-                            console.log(res)
                           if(res.data.success===true){
                             localStorage.setItem("userId",res.data.result.userId);
                             localStorage.setItem("userNickname",res.data.result.userNickname);
