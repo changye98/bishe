@@ -4,8 +4,8 @@
       <a-menu-item class="left" style="padding: 0px"><img src="~assets/img/logo.png" width="500px"> </a-menu-item>
       <a-menu-item class="daohanglan" style="padding: 0px"><router-link to="/home/index"><a-icon type="home" />首页</router-link> </a-menu-item>
       <a-menu-item class="daohanglan" style="padding: 0px"> <router-link to="/home/myGrade"><a-icon type="user" />我的成绩</router-link></a-menu-item>
-      <a-menu-item class="daohanglan" style="padding: 0px"> <router-link to="/home/question"><a-icon type="question-circle" />题目管理</router-link></a-menu-item>
-      <a-menu-item class="daohanglan" style="padding: 0px"><router-link to="/home/test_paper"><a-icon type="edit" />试卷管理</router-link> </a-menu-item>
+      <a-menu-item class="daohanglan" style="padding: 0px" v-if="roleId===1"> <router-link to="/home/question"><a-icon type="question-circle" />题目管理</router-link></a-menu-item>
+      <a-menu-item class="daohanglan" style="padding: 0px" v-if="roleId===1"><router-link to="/home/test_paper"><a-icon type="edit" />试卷管理</router-link> </a-menu-item>
       <a-menu-item class="daohanglan" style="margin-right: 70px"><router-link to="/home/exam"><a-icon type="highlight" />考试列表</router-link> </a-menu-item>
 
     </a-menu>
@@ -23,17 +23,17 @@ import userMenu from "@/views/user/UserMenu.vue"
 export default {
   name: 'home',
   components: {
-
     userMenu
   },
   data() {
     return {
-
+        roleId:null
     };
   },
   methods: {
   },
   created(){
+     this.roleId = Number(localStorage.getItem("userRoleId"))
     let hour = new Date().getHours() ;
     let time = null;
     if(hour>=0&&hour<=6){

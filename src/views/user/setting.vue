@@ -14,11 +14,11 @@
                                 基本设置
                             </router-link>
                         </a-menu-item>
-                        <a-menu-item key="/account/settings/custom">
-                            <router-link to="/account/setting/personalize">
-                                个性化
-                            </router-link>
-                        </a-menu-item>
+                        <!--<a-menu-item key="/account/settings/custom">-->
+                            <!--<router-link to="/account/setting/personalize">-->
+                                <!--个性化-->
+                            <!--</router-link>-->
+                        <!--</a-menu-item>-->
                     </a-menu>
                 </div>
                 <div class="account-settings-info-right">

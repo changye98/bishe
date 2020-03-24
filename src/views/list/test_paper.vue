@@ -23,7 +23,7 @@
                     >
               <a-button type="primary" @click="queryList(pagination.current)" style="margin-left: -500px">查询</a-button>
               <a-button style="margin-left: 15px" @click="() => queryParam = {}">重置</a-button>
-              <a-button type="primary" icon="plus" @click="$refs.createQuestionModal.create()" style="margin-left: 200px">新建</a-button>
+              <a-button type="primary" icon="plus" @click="$refs.createExamModal.create()" style="margin-left: 200px">新建</a-button>
             </span>
                 </a-row>
             </a-form>
@@ -38,14 +38,16 @@
         <template>
           <a @click="handleSub(record)">详情</a>
           <a-divider type="vertical"/>
-          <a @click="handleEdit(record)">编辑</a>
+          <!--<a @click="handleEdit(record)">编辑</a>
+          <a-divider type="vertical"/>-->
+          <a @click="handleDelete(record)">删除</a>
         </template>
       </span>
 
         </a-table>
         <create-form ref="createModal" @ok="handleOk"/>
         <!-- ref是为了方便用this.$refs.modal直接引用，上同 -->
-        <step-by-step-exam-modal ref="createExamModal" @ok="handleOk"/>
+        <step-by-step-exam-modal @queryList="queryList" ref="createExamModal" @ok="handleOk"/>
         <question-view-modal ref="modalView" @ok="handleOk"/>
         <question-edit-modal ref="modalEdit" @ok="handleOk"/>
     </a-card>
@@ -56,7 +58,7 @@
   import QuestionViewModal from './questionModules/QuestionViewModal'
   import QuestionEditModal from './questionModules/QuestionEditModal'
   import CreateForm from './questionModules/CreateForm'
-  //import { getExamList } from '../../api/exam'
+  import  {getAction,postAction} from "@/http";
   import StepByStepExamModal from './examModules/StepByStepExamModal'
 
   export default {
@@ -75,7 +77,7 @@
           pageSize:10,
           total:0,
           onChange: page => {
-            getAction("/question/list",{currentPage:page}).then(res => {
+            getAction("/exam/manageList",{currentPage:page}).then(res => {
               if (res.data.success === true) {
                 this.data = res.data.result.records
                 this.pagination.current =res.data.result.current
@@ -107,6 +109,10 @@
             dataIndex: 'score'
           },
           {
+            title: '描述',
+            dataIndex: 'desc'
+          },
+          {
             title: '创建人',
             dataIndex: 'creator'
           },
@@ -115,22 +121,40 @@
             dataIndex: 'elapse'
           },
           {
-            title: '更新时间',
+            title: '创建时间',
             dataIndex: 'updateTime'
           },
           {
             title: '操作',
             dataIndex: 'action',
-            width: '150px',
+            width: '160px',
             scopedSlots: { customRender: 'action' }
           }
         ],
       }
     },
     created () {
-      this.tableOption()
+      this.queryList(1)
     },
     methods: {
+      queryList(pageNo){
+        const  that = this
+        getAction("/exam/manageList",{currentPage:pageNo,name:that.queryParam.name,score:that.queryParam.score,
+          description:that.queryParam.description
+        }).then(res => {
+          if (res.data.success === true) {
+            that.data =  res.data.result.records ;
+            console.log(that.data)
+            that.pagination.current =res.data.result.current
+            that.pagination.total =res.data.result.total
+          } else {
+            this.$notification.error({
+              message: '获取问题列表失败',
+              description: res.msg
+            })
+          }
+        })
+      },
       handleEdit (record) {
         // Todo:修改考试信息和下面的题目，弹出一个可修改的输入框，实际上复用创建题目的模态框即可，还没做完
         console.log(record)
@@ -150,6 +174,35 @@
       },
       handleOk () {
         this.$refs.table.refresh()
+      },
+      handleDelete (record) {
+        // 弹出一个可修改的输入框
+        const that = this
+        this.$confirm({
+          title: '提示',
+          content: '确定要删除吗 ?',
+          onOk () {
+
+            getAction("/exam/delete",{id:record.id}).then(res => {
+              if (res.data.success === true) {
+                that.$notification.success({
+                  message: '成功',
+                  description: "删除问题成功"
+                })
+                that.queryList(1)
+              } else {
+                that.$notification.error({
+                  message: '失败',
+                  description: '删除问题失败'
+                })
+              }
+            })
+          },
+          onCancel () {
+          }
+        })
+        console.log(record)
+
       },
       onSelectChange (selectedRowKeys, selectedRows) {
         this.selectedRowKeys = selectedRowKeys

@@ -23,33 +23,30 @@
 </template>
 
 <script>
-
-    import { mapActions, mapGetters } from 'vuex'
-
 export default {
   name: 'UserMenu',
   data(){
     return {
        username:"" ,
-      userAvatar:""
+       userAvatar:""
     }
   },
 
   methods: {
-    ...mapActions(['Logout']), // 清除token和localStorage中的信息
     handleLogout () {
       const that = this
 
       this.$confirm({
         title: '提示',
         content: '真的要注销登录吗 ?',
+        okText:"确定",
+        cancelText:"取消",
         onOk () {
             that.$router.push("/login")
             localStorage.removeItem("userNickname")
             localStorage.removeItem("userAvatar")
             localStorage.removeItem("userId")
-             localStorage.removeItem("userRoleId")
-
+            localStorage.removeItem("userRoleId")
         },
         onCancel () {
         }

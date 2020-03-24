@@ -235,6 +235,7 @@ export default {
     },
     handleNext (step) {
       // 处理下一步或者完成事件
+      console.log(this)
       const { form: { validateFields } } = this
       const currentStep = step + 1
       if (currentStep <= 2) {

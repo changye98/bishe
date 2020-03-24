@@ -56,8 +56,9 @@
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
-            <router-link class="right" to="/register" style="float: right;">注册账户</router-link>
+
           </a-form-item>
+            <router-link class="right" to="/register" style="float: right;position: relative;margin-left: 100px">注册账户</router-link>
         </a-tab-pane>
       </a-tabs>
 
@@ -164,6 +165,9 @@
   }
   label {
     font-size: 14px;
+  }
+  .ant-form-item-control-wrapper .ant-form-explain{
+      /*position: relative;top: -38px !important;*/
   }
 
 

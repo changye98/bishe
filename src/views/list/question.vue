@@ -46,7 +46,7 @@
           <a-divider type="vertical"/>
           <a @click="handleEdit(record)">编辑</a>
             <a-divider type="vertical"/>
-          <a @click="handleDelect(record)">删除</a>
+          <a @click="handleDelete(record)">删除</a>
         </template>
       </span>
         </a-table>
@@ -173,7 +173,7 @@
         console.log(record)
         this.$refs.modalEdit.edit(record)
       },
-      handleDelect (record) {
+      handleDelete (record) {
         // 弹出一个可修改的输入框
         const that = this
         this.$confirm({

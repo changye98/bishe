@@ -136,6 +136,9 @@ export default {
   },
   methods: {
     getQuestionDetail (questionId) {
+     // console.log("answerMap----------",this.answersMap)
+      // console.log("currentQuestion=============",this.currentQuestion)
+       //console.log("checkValues=============",this.checkValues)
       // 问题切换时从后端拿到问题详情，渲染到前端content中
       const that = this
       // 清空问题绑定的值
